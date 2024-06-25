@@ -1,19 +1,4 @@
 {
-    "alpha_DNF_top_preds": -13.6,
-    "alpha_TGS_top_preds": -11.47,
-    "alpha_YSP_top_preds": -13.45,
-    "beta_KGG_top_preds": -11.29,
-    "beta_SLG_top_preds": -11.14,
-    "beta_SSS_top_preds": -11.21,
-    "beta_WSA_top_preds": -12.16,
-    "delta_MT_top_preds": -12.61,
-    "delta_TYN_top_preds": -13.09,
-    "fox_GIY_top_preds": -12.12,
-    "golf": -12.36,
-    "hotel": -11.99,
-    "juliet": -12.82,
-    "kilo": -13.65,
-    "lima": -13.13,
-    "november": -13.03,
-    "oscar": -11.72
+    "alpha_H_134": -11.47,
+    "alpha_H_135": -11.46
 }
