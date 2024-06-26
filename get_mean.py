@@ -9,6 +9,9 @@ import numpy as np
 def get_mean(folder_path):
     json_dir = os.path.join(folder_path, 'json')
 
+    means = []
+    names = []
+
     sum = 0.0
     count = 0.0
 
@@ -19,38 +22,50 @@ def get_mean(folder_path):
             print(os.path.join(json_dir, json_file))
             if data['prediction'] is not None:
                 sum += data['prediction']
-                count += 1
-    
-    return (sum/count), f.name
+                count += 1          
+    means.append(sum/count)
+    names.append(f.name[7])
+            
+    return means, names
 
 def graph_mean(data):
-    means, names = data
-    
+
+    keys = []
+    for folder in data:
+        keys.append(folder)
+
     fig, ax = plt.subplots(dpi = 150, figsize = (5,5))
 
-    ax.scatter([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], means)
+    for data_dict in data.values():
+        print(data_dict)
+        x = data_dict[1][0]
+        y = data_dict[0][0]
+        print(f"x is{x}")
+        print(f"y is {y}")
+        ax.scatter(x,y,color='red')
 
-    ax.set_xticklabels(names,fontsize=12)
-    ax.set_ylabel('Age',fontsize=14)
-    ax.set_title('Age scatter plot by sex',fontsize=12)
+
+    ax.set_xlabel('Antibody',fontsize=14)
+    ax.set_ylabel('Average Delta G',fontsize=14)
     
     plt.show()
     plt.close()
 
 def main(args):
-    best = {}
+    means = {}
 
     for folder in os.listdir(args.pdb_folder):
         folder_path = os.path.join(args.pdb_folder, folder)
+        print(folder_path)
         if os.path.isdir(folder_path):
-            best[folder] = get_mean(folder_path)
+            means[folder] = get_mean(folder_path)
 
     json_file_path = os.path.join(args.pdb_folder, "subfolder_avgs.json")
     with open(json_file_path, 'w') as json_file:
-        json.dump(best, json_file, indent=4)
+        json.dump(means, json_file, indent=4)
 
     print(f"Avg results stored in {json_file_path}")
-    graph_mean(get_mean(folder_path))
+    graph_mean(means)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Job submission for CSM-AB')
